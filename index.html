@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FBF7EF">
+<title>فکر می‌کنی PCOS داری؟</title>
+<meta name="description" content="پریودهات نامنظمه یا روی چونه و بدنت موهای ضخیم درمیاد؟ چند سؤال کوتاه جواب بده تا ببینی کدوم علائم ارزش پیگیری دارن.">
+<link rel="canonical" href="https://mrhunter82s.github.io/pcos-test/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:url" content="https://mrhunter82s.github.io/pcos-test/">
+<meta property="og:title" content="فکر می‌کنی PCOS داری؟">
+<meta property="og:description" content="پریودهات نامنظمه یا روی چونه و بدنت موهای ضخیم درمیاد؟ چند سؤال کوتاه جواب بده تا ببینی کدوم علائم ارزش پیگیری دارن.">
+<meta property="og:image" content="https://mrhunter82s.github.io/pcos-test/og-v1.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<!--
+  لندینگِ عمومیِ «فکر می‌کنی PCOS داری؟» — hunter-s.com/pcos (برای فالوورهای اینستاگرام، آبان ۱۴۰۵).
+  سرو: app/pcos/[[...slug]]/route.ts · گارد: scripts/check-public-pcos.mjs
+
+  🔒 قولِ صفحه: جواب‌ها فقط در حافظهٔ همین صفحه پردازش می‌شوند. هیچ fetch/XHR/beacon، هیچ
+  localStorage/sessionStorage/کوکی، هیچ اسکریپت یا تصویرِ بیرونی. گارد همهٔ این‌ها را می‌گردد.
+  🔑 منطقِ نتیجه فقط در اسکریپتِ «pcos-logic» است و به DOM دست نمی‌زند تا گارد بتواند آن را
+  بی مرورگر، در Node، با مسیرهای ثابت بسنجد.
+-->
+<style>
+@font-face{font-family:Vazirmatn;font-style:normal;font-weight:400;font-display:swap;src:url(fonts/Vazirmatn-Regular.woff2) format("woff2")}
+@font-face{font-family:Vazirmatn;font-style:normal;font-weight:700;font-display:swap;src:url(fonts/Vazirmatn-Bold.woff2) format("woff2")}
+:root{
+  color-scheme:light only;
+  --bg:#FBF7EF;--card:#FFFFFF;--ink:#2B2127;--ink-2:#4A3D45;--muted:#6E6068;--line:#E8DFD2;
+  --plum:#6B2A57;--plum-2:#56204A;--plum-soft:#F4E9F0;--plum-line:#CFAFC3;
+  --urg-bg:#FCEDE6;--urg-line:#EFC3B1;--urg-ink:#8E3418;
+  --att-bg:#FFF4DE;--att-line:#EBD3A2;--att-ink:#76510B;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.8 Vazirmatn,Tahoma,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;touch-action:manipulation}
+[hidden]{display:none!important}
+.wrap{max-width:540px;margin:0 auto;padding:0 18px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+.en{direction:ltr;unicode-bidi:isolate}
+
+/* دکمه‌ها */
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;padding:12px 20px;border:0;border-radius:16px;font-weight:700;font-size:18px;line-height:1.5;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent;transition:transform .12s ease,background-color .2s ease,box-shadow .2s ease}
+.btn:active{transform:scale(.985)}
+.btn:focus-visible,.opt:focus-visible,.back:focus-visible,summary:focus-visible{outline:3px solid #B98AAA;outline-offset:2px}
+.btn.primary{background:var(--plum);color:#fff;box-shadow:0 8px 20px rgba(107,42,87,.22)}
+.btn.primary:active{background:var(--plum-2)}
+.btn.primary:disabled{background:#DACBD4;color:#fff;box-shadow:none;cursor:default;transform:none}
+.btn.secondary{background:#fff;color:var(--plum);border:1.5px solid var(--plum-line)}
+.btn.ghost{background:transparent;color:var(--muted);min-height:48px;font-weight:400;font-size:17px}
+
+/* صفحهٔ اول */
+.intro{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:36px 0 18px}
+.mark{width:104px;height:104px;margin:0 0 20px}
+.intro h1{text-wrap:balance;margin:0 0 30px;font-size:clamp(28px,8.6vw,38px);line-height:1.5;font-weight:700}
+.intro h1 .en{color:var(--plum)}
+.micro{margin:14px 0 0;font-size:14px;color:var(--muted)}
+
+/* سؤال */
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+.back{display:inline-flex;align-items:center;gap:4px;margin-inline-start:-6px;padding:8px 6px;background:none;border:0;border-radius:10px;color:var(--plum);font-weight:700;font-size:16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.back svg{width:20px;height:20px;flex:none}
+.count{font-size:14px;color:var(--muted)}
+.bar{height:6px;margin-top:4px;background:#ECE2D4;border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:var(--plum);border-radius:99px;transition:width .3s ease}
+.q{flex:1;padding:10px 0 0}
+.lead{margin:6px 0 16px;padding:12px 14px;background:var(--att-bg);border:1px solid var(--att-line);border-radius:14px;color:var(--att-ink);font-size:15.5px;line-height:1.9}
+.qt{text-wrap:balance;margin:4px 0 8px;font-size:21px;line-height:1.65;font-weight:700;outline:none}
+.help{margin:0 0 6px;font-size:15.5px;line-height:1.85;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:10px;margin:14px 0 0}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:13px 16px;background:var(--card);border:1.5px solid var(--line);border-radius:16px;font-size:17px;line-height:1.65;text-align:start;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color .15s ease,background-color .15s ease}
+.opt:active{background:#FBF5F9}
+.opt .ind{flex:none;display:grid;place-items:center;width:22px;height:22px;border:2px solid #C9B8C3;border-radius:50%;background:#fff;transition:background-color .15s ease,border-color .15s ease}
+.opt.multi .ind{border-radius:7px}
+.opt[aria-checked="true"]{border-color:var(--plum);background:var(--plum-soft)}
+.opt[aria-checked="true"] .ind{border-color:var(--plum);background:var(--plum)}
+.opt[aria-checked="true"] .ind::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+.opt.multi[aria-checked="true"] .ind::after{width:10px;height:5px;border-radius:0;background:transparent;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:translateY(-1px) rotate(-45deg)}
+.qnote{margin:14px 0 0;padding:10px 14px;background:var(--plum-soft);border-radius:12px;color:var(--plum-2);font-size:15px;line-height:1.85}
+.dock{position:sticky;bottom:0;z-index:4;margin-top:18px;padding:14px 0 calc(14px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 72%,rgba(251,247,239,0))}
+
+/* نتیجه */
+.res{flex:1;padding:22px 0 8px;outline:none}
+.alert{margin:0 0 12px;padding:14px 16px;border:1px solid;border-radius:16px}
+.alert.urgent{background:var(--urg-bg);border-color:var(--urg-line)}
+.alert.attention{background:var(--att-bg);border-color:var(--att-line)}
+.alert h2{text-wrap:balance;display:flex;align-items:flex-start;gap:8px;margin:0 0 6px;font-size:17.5px;line-height:1.65;font-weight:700}
+.alert.urgent h2{color:var(--urg-ink)}
+.alert.attention h2{color:var(--att-ink)}
+.alert h2 svg{flex:none;width:22px;height:22px;margin-top:3px}
+.alert p{margin:6px 0 0;font-size:15.5px;line-height:1.9}
+.cleared{margin:0 0 12px;font-size:15px;color:var(--muted)}
+.hl{margin:4px 0 14px;padding:20px 18px;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 26px rgba(60,30,50,.06)}
+.eyebrow{display:inline-block;margin:0 0 10px;padding:2px 12px;background:var(--plum-soft);border-radius:99px;color:var(--plum);font-size:13px;font-weight:700;line-height:1.9}
+.hl h2{text-wrap:balance;margin:0;font-size:22px;line-height:1.6;font-weight:700}
+.hl p{text-wrap:pretty;margin:12px 0 0;font-size:16.5px;line-height:1.95}
+.dots{margin:10px 0 0;padding:0;list-style:none}
+.dots li{position:relative;margin:6px 0;padding-inline-start:18px;font-size:16px;line-height:1.85}
+.dots li::before{content:"";position:absolute;inset-inline-start:2px;top:.78em;width:7px;height:7px;border-radius:50%;background:var(--plum)}
+.sub{margin:14px 0 0!important;font-weight:700}
+.nextbox{margin:0 0 14px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-inline-start:4px solid var(--plum);border-radius:14px}
+.nextbox p{margin:0 0 6px;font-size:16px;line-height:1.9}
+.nextbox p:last-child{margin-bottom:0}
+.notes{margin:0 0 6px;padding:0;list-style:none}
+.notes li{position:relative;margin:8px 0;padding-inline-start:18px;color:var(--ink-2);font-size:15px;line-height:1.9}
+.notes li::before{content:"";position:absolute;inset-inline-start:3px;top:.8em;width:6px;height:6px;border-radius:50%;background:#C6B1BE}
+.gate{margin:0 0 14px;padding:16px;background:var(--card);border:1px dashed var(--plum-line);border-radius:16px}
+.gate p{margin:0 0 12px;font-size:16px;line-height:1.9}
+.gate .small{margin:12px 0 0;font-size:14.5px;color:var(--muted)}
+.actions{display:grid;gap:10px;margin:18px 0 6px}
+.disc{margin:16px 0 4px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:14.5px;line-height:1.95}
+
+/* «این بررسی بر چه اساسی طراحی شده؟» */
+details.about{margin:14px 0 calc(22px + env(safe-area-inset-bottom));background:var(--card);border:1px solid var(--line);border-radius:16px}
+details.about summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;list-style:none;cursor:pointer;color:var(--plum);font-weight:700;font-size:16px;line-height:1.7;-webkit-tap-highlight-color:transparent}
+details.about summary::-webkit-details-marker{display:none}
+details.about summary svg{flex:none;width:20px;height:20px;transition:transform .2s ease}
+details.about[open] summary svg{transform:rotate(180deg)}
+.about-body{padding:0 16px 14px;font-size:15px;line-height:1.95;color:var(--ink-2)}
+.about-body p{margin:0 0 10px}
+.about-body ul{margin:0 0 10px;padding-inline-start:20px}
+.about-body li{margin:4px 0}
+.links{list-style:none;padding:0!important}
+.links li{margin:8px 0}
+.links a{color:var(--plum);font-weight:700;text-decoration:underline;text-underline-offset:4px}
+
+/* پیام کوتاه و کپیِ دستی */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:30;max-width:calc(100% - 32px);padding:10px 18px;background:#2B2127;color:#fff;border-radius:12px;font-size:15px;line-height:1.7;text-align:center;opacity:0;pointer-events:none;transform:translate(-50%,16px);transition:opacity .2s ease,transform .2s ease}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;padding:16px;background:rgba(43,33,39,.45)}
+.sheet-card{width:100%;max-width:520px;padding:18px 16px calc(16px + env(safe-area-inset-bottom));background:var(--card);border-radius:20px}
+.sheet-card h2{margin:0 0 6px;font-size:18px}
+.sheet-card p{margin:0 0 10px;font-size:15px;color:var(--muted);line-height:1.85}
+.sheet-card textarea{width:100%;height:42vh;margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#FDFBF7;color:var(--ink);font:400 16px/1.8 Vazirmatn,Tahoma,sans-serif;resize:none}
+
+.enter{animation:enter .22s ease-out}
+@keyframes enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.enter{animation:none}.bar>i,.btn,.opt,.toast{transition:none}}
+@media (max-width:360px){.wrap{padding:0 14px}.opt{font-size:16px;padding:12px 14px}.qt{font-size:20px}}
+</style>
+</head>
+<body>
+<main id="app" class="wrap">
+  <section class="intro">
+    <svg class="mark" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="30" fill="#F4E9F0"/>
+      <g fill="#6B2A57"><circle cx="60" cy="14" r="4.6"/><circle cx="70.2" cy="15.2" r="4.6"/><circle cx="80" cy="18.6" r="4.6"/><circle cx="88.7" cy="24" r="4.6"/><circle cx="96" cy="31.3" r="4.6"/></g>
+      <g fill="#E3D4C3"><circle cx="101.4" cy="40" r="4"/><circle cx="104.8" cy="49.8" r="4"/><circle cx="106" cy="60" r="4"/><circle cx="104.8" cy="70.2" r="4"/><circle cx="101.4" cy="80" r="4"/><circle cx="96" cy="88.7" r="4"/><circle cx="88.7" cy="96" r="4"/><circle cx="80" cy="101.4" r="4"/><circle cx="70.2" cy="104.8" r="4"/><circle cx="60" cy="106" r="4"/><circle cx="49.8" cy="104.8" r="4"/><circle cx="40" cy="101.4" r="4"/><circle cx="31.3" cy="96" r="4"/><circle cx="24" cy="88.7" r="4"/><circle cx="18.6" cy="80" r="4"/><circle cx="15.2" cy="70.2" r="4"/><circle cx="14" cy="60" r="4"/><circle cx="15.2" cy="49.8" r="4"/><circle cx="18.6" cy="40" r="4"/><circle cx="24" cy="31.3" r="4"/><circle cx="31.3" cy="24" r="4"/><circle cx="40" cy="18.6" r="4"/><circle cx="49.8" cy="15.2" r="4"/></g>
+      <circle cx="60" cy="60" r="9" fill="#6B2A57" opacity=".85"/>
+    </svg>
+    <h1>فکر می‌کنی <span class="en">PCOS</span> داری؟</h1>
+    <button type="button" class="btn primary" data-act="start">شروع بررسی</button>
+    <p class="micro">حدود ۲ دقیقه · بدون ثبت‌نام · جواب‌هات جایی ذخیره نمی‌شه</p>
+    <noscript><p class="micro">برای دیدن پرسش‌نامه، جاوااسکریپتِ مرورگر باید روشن باشه.</p></noscript>
+  </section>
+  <details class="about">
+    <summary><span>این بررسی بر چه اساسی طراحی شده؟</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="about-body">
+      <p>این پرسش‌نامه بر پایهٔ راهنمای بین‌المللی ۲۰۲۳ ساخته شده که دانشگاه موناش با همکاری انجمن‌های پزشکی دنیا تهیه کرده. طبق این راهنما، در بزرگسال‌ها PCOS وقتی مطرح می‌شه که دو مورد از این سه تا باشه و پزشک علت‌های مشابه رو کنار گذاشته باشه:</p>
+      <ul>
+        <li>پریودهای نامنظم</li>
+        <li>نشونهٔ بالا بودن آندروژن‌ها، مثل پرمویی یا بالا بودن تستوسترون در آزمایش</li>
+        <li>ظاهر پلی‌کیستیک تخمدان در سونوگرافی، یا AMH بالا</li>
+      </ul>
+      <p>در نوجوان‌ها و تا ۸ سال بعد از اولین پریود، سونوگرافی و AMH ملاک نیستن. جوش و کم‌پشتی مو هم به‌تنهایی نشونهٔ قابل‌اتکایی حساب نمی‌شن.</p>
+      <p>در نسخهٔ به‌روزشدهٔ راهنما از نام PMOS هم استفاده می‌شه. این اسم تازه که از اردیبهشت ۱۴۰۵ رسمی شده، نشون می‌ده این سندرم فقط به تخمدان مربوط نیست و هورمون‌ها و متابولیسم بدن رو هم درگیر می‌کنه. این‌جا PCOS نوشتیم چون آشناتره.</p>
+      <ul class="links">
+        <li><a href="https://www.monash.edu/medicine/mchri/pcos/guideline" target="_blank" rel="noopener noreferrer">راهنمای بین‌المللی Monash</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10505534/" target="_blank" rel="noopener noreferrer">معیارهای تشخیص و جزئیات راهنما</a></li>
+        <li><a href="https://www.asrm.org/practice-guidance/practice-committee-documents/current-evaluation-of-amenorrhea" target="_blank" rel="noopener noreferrer">راهنمای بررسی قطع پریود</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11899933/" target="_blank" rel="noopener noreferrer">معیارهای نوجوانان و سال‌های اول بعد از اولین پریود</a></li>
+      </ul>
+    </div>
+  </details>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="sheet-t">
+    <h2 id="sheet-t">کپی دستی</h2>
+    <p>کپی خودکار در این مرورگر کار نکرد. روی متن نگه دار و «کپی» رو بزن.</p>
+    <textarea id="sheet-x" readonly></textarea>
+    <button type="button" class="btn secondary" data-act="sheet-close">بستن</button>
+  </div>
+</div>
+
+<script id="pcos-logic">
+/* منطقِ نتیجه — قاعده‌های ثابت، بی DOM. گارد همین بلوک را در Node می‌دواند. */
+(function (root) {
+  "use strict";
+
+  var LEAD = "۱۲ ماه اخیر رو در نظر بگیر. اگه بارداری، شیردهی یا داروی هورمونی روی پریودهات اثر گذاشته، الگوی قبل از اون رو بگو. اگه یادت نیست، “نمی‌دونم” رو انتخاب کن.";
+  var EXIT_NOTE = "با این جواب، سؤال دیگه‌ای لازم نیست و همین حالا توضیح مخصوص خودت رو می‌بینی.";
+
+  var Q = [
+    { id: "age", title: "چند سالته و چقدر از اولین پریودت گذشته؟",
+      help: "اگه در دوران گذار به یائسگی هستی یا یائسه شدی، همون گزینه رو انتخاب کن.",
+      short: "سن و زمان اولین پریود",
+      options: [
+        ["adult8", "۱۸ سالم یا بیشتره و ۸ سال یا بیشتر از اولین پریودم گذشته"],
+        ["adult3", "۱۸ سالم یا بیشتره و ۳ تا کمتر از ۸ سال گذشته"],
+        ["teen", "زیر ۱۸ سالمه یا کمتر از ۳ سال از اولین پریودم گذشته"],
+        ["meno", "در دوران گذار به یائسگی‌ام یا یائسه شدم"],
+        ["nomenarche", "۱۵ سالم یا بیشتره و هنوز اولین پریودم رو نداشتم"],
+        ["unsure", "مطمئن نیستم"]
+      ],
+      notes: {
+        unsure: "اگه تقریبی می‌دونی، نزدیک‌ترین گزینه رو انتخاب کن. اگه نه، ادامه بده؛ نتیجه با معیارهای بزرگسال‌ها حساب می‌شه.",
+        teen: EXIT_NOTE, meno: EXIT_NOTE, nomenarche: EXIT_NOTE
+      } },
+    { id: "status", title: "الان کدوم مورد درباره‌ات صدق می‌کنه؟", short: "وضعیت فعلی",
+      options: [
+        ["none", "هیچ‌کدوم"],
+        ["pregnant", "باردارم"],
+        ["maybe", "پریودم عقب افتاده و احتمال بارداری هست"],
+        ["lactation", "شیردهی دارم یا به‌تازگی زایمان کردم"],
+        ["hormonal", "از قرص، آمپول، ایمپلنت، آی‌یودی هورمونی یا داروی هورمونی استفاده می‌کنم یا تازه قطعش کردم"],
+        ["unsure", "مطمئن نیستم"]
+      ] },
+    { id: "interval", lead: LEAD, title: "فاصلهٔ پریودهات معمولاً چقدره؟",
+      help: "از روز اول یک پریود تا روز اول پریود بعدی حساب کن.", short: "فاصلهٔ معمول پریودها",
+      options: [
+        ["normal", "معمولاً ۲۱ تا ۳۵ روزه"],
+        ["long", "بارها بیشتر از ۳۵ روز بوده"],
+        ["short", "بارها کمتر از ۲۱ روز بوده"],
+        ["both", "هم فاصله‌های طولانی‌تر از ۳۵ روز و هم کوتاه‌تر از ۲۱ روز داشتم"],
+        ["unknown", "نمی‌دونم"]
+      ] },
+    { id: "count", lead: LEAD,
+      title: "در یک دورهٔ ۱۲ماهه که پریودهات تحت تأثیر بارداری، شیردهی یا داروی هورمونی نبود، چند بار پریود شدی؟",
+      short: "تعداد پریود در ۱۲ ماهِ بدون اثر بارداری، شیردهی یا دارو",
+      options: [["lt8", "صفر تا ۷ بار"], ["ge8", "۸ بار یا بیشتر"], ["unknown", "برای یک سال کامل نمی‌دونم"]] },
+    { id: "gap90", lead: LEAD, title: "در همون دوره پیش اومده بیشتر از ۹۰ روز پریود نشی؟", short: "بیشتر از ۹۰ روز بدون پریود",
+      options: [["now", "بله، الان بیشتر از ۹۰ روزه"], ["before", "بله، قبلاً در همون دوره پیش اومده"], ["no", "نه"], ["unknown", "نمی‌دونم"]] },
+    { id: "hair", title: "روی چونه، بالای لب، وسط سینه، زیر ناف، پشت یا ران‌هات رویش مشخص موهای ضخیم و زبر داری؟",
+      help: "اگر اصلاح می‌کنی یا لیزر کردی، وضعیت قبلش رو در نظر بگیر.",
+      short: "موهای ضخیم و زبر روی چونه، لب، سینه، زیر ناف، پشت یا ران (وضعیت قبل از اصلاح یا لیزر)",
+      options: [
+        ["none", "رویش مشخص ندارم یا فقط چند تار پراکنده‌ست"],
+        ["one", "در یک ناحیه رویش مشخص دارم"],
+        ["many", "در چند ناحیه رویش مشخص دارم"],
+        ["unsure", "مطمئن نیستم"]
+      ] },
+    { id: "skin", title: "جوش ماندگار یا کم‌پشتی محسوس مو در قسمت فرق سر داری؟", short: "جوش ماندگار یا کم‌پشتی فرق سر",
+      options: [["acne", "جوش ماندگار"], ["thin", "کم‌پشتی فرق سر"], ["both", "هر دو"], ["none", "هیچ‌کدوم"], ["unsure", "مطمئن نیستم"]] },
+    { id: "changes", multi: true, exclusive: ["none", "unsure"], title: "کدوم‌یک از این تغییرات رو تجربه کردی؟",
+      help: "هر چندتا که درباره‌ات صدق می‌کنه رو انتخاب کن.", short: "تغییرات",
+      options: [
+        ["virilize", "موهای ضخیم ظرف چند ماه خیلی بیشتر شدن یا صدام به‌وضوح بم‌تر شده"],
+        ["energy", "پریودهام بعد از کم‌خوری، کاهش وزن قابل‌توجه یا افزایش شدید تمرین نامنظم شدن"],
+        ["milk", "خارج از بارداری و شیردهی از سینه‌ام ترشح شیری دارم"],
+        ["none", "هیچ‌کدوم"],
+        ["unsure", "مطمئن نیستم"]
+      ] },
+    { id: "lab", title: "پزشک بعد از دیدن آزمایش بهت گفته تستوسترون یا یکی از هورمون‌های مشابه بالاست؟",
+      short: "آزمایش تستوسترون یا هورمون‌های مشابه",
+      options: [["high", "بله، پزشک تأیید کرده"], ["normal", "بررسی شده و بالا نبوده"], ["unknown", "آزمایش ندادم یا نتیجه رو نمی‌دونم"]] },
+    { id: "ovary", title: "پزشک گفته ظاهر تخمدانت در سونوگرافی «پلی‌کیستیک» بوده یا نتیجهٔ AMH با این معیار همخوانی داشته؟",
+      short: "سونوگرافی یا AMH",
+      options: [
+        ["us", "بله، در سونوگرافی"],
+        ["amh", "بله، بر اساس AMH"],
+        ["both", "بله، هر دو"],
+        ["cyst", "فقط گفتن «کیست تخمدان» دارم"],
+        ["no", "بررسی شده و هیچ‌کدوم رو نگفتن"],
+        ["unknown", "بررسی نکردم یا نمی‌دونم"]
+      ] }
+  ];
+  var BY = {};
+  Q.forEach(function (q) { BY[q.id] = q; });
+
+  var HEADLINES = {
+    multi: "چند نشونهٔ هم‌جهت برای بررسی PCOS داری.",
+    combo: "ترکیب علائمت با PCOS همخوانی داره.",
+    single: "یک نشونه داری که ارزش بررسی داره.",
+    clear: "در جواب‌هات نشونهٔ واضحی دیده نشد.",
+    unknown: "برای نتیجه‌گیری اطلاعات کافی نداریم."
+  };
+
+  /* مسیرهای پیگیری — ترتیبِ این فهرست ترتیبِ نمایش است. «pre» یعنی پیش از روشن شدنِ بارداری هم دیده می‌شود. */
+  var ALERT = {
+    preg: { id: "preg", tone: "attention", pre: true, title: "اول بارداری رو بررسی کن",
+      body: ["گفتی پریودت عقب افتاده و احتمال بارداری هست. اول با تست بارداری خانگی یا آزمایش خون این رو روشن کن. عقب افتادن پریود می‌تونه از بارداری باشه، برای همین نتیجهٔ این بررسی رو بذار برای بعد از اون."] },
+    viril: { id: "viril", tone: "urgent", pre: true, title: "این تغییر ارزش بررسی پزشکی سریع داره",
+      body: ["گفتی موهای ضخیم ظرف چند ماه خیلی بیشتر شدن یا صدات به‌وضوح بم‌تر شده. تغییر به این سرعت با الگوی معمول PCOS که آهسته پیش می‌ره فرق داره و باید زود بررسی بشه. یه نوبت نزدیک با پزشک بگیر و همین تغییر رو اول از همه بگو."] },
+    amen: { id: "amen", tone: "attention", title: "قطع پریودت ارزش پیگیری پزشکی داره",
+      body: ["گفتی الان بیشتر از ۹۰ روزه پریود نشدی. این موضوع، جدا از PCOS، خودش ارزش پیگیری پزشکی داره. پزشک معمولاً اول بارداری رو کنار می‌ذاره و بعد با چند آزمایش ساده، مثل تیروئید و پرولاکتین، دنبال علت می‌گرده."] }
+  };
+  var OTHER = {
+    title: "علت‌های دیگه هم نیاز به بررسی دارن",
+    milk: "ترشح شیری از سینه، خارج از بارداری و شیردهی، معمولاً با بالا بودن هورمونی به اسم پرولاکتین همراهه و خودش می‌تونه پریود رو نامنظم کنه.",
+    energy: "وقتی بی‌نظمی پریود بعد از کم‌خوری، کاهش وزن یا تمرین خیلی زیاد شروع شده، ممکنه علتش کم بودن انرژیِ در دسترسِ بدن باشه، نه PCOS. این دو تا بررسی و درمان متفاوتی دارن.",
+    close: "این‌ها رو به پزشکت بگو تا پیش از هر نتیجه‌گیری دربارهٔ PCOS بررسی بشن."
+  };
+  var HIST = {
+    pregnant: "چون گفتی باردار هستی، این توضیح دربارهٔ الگوی پریودهات قبل از بارداریه.",
+    lactation: "چون گفتی شیر می‌دی یا تازه زایمان کردی، این توضیح دربارهٔ الگوی پریودهات قبل از بارداریه.",
+    hormonal: "چون گفتی داروی هورمونی مصرف می‌کنی یا تازه قطعش کردی، این توضیح دربارهٔ الگوی پریودهات قبل از اثر داروئه."
+  };
+
+  /* مسیرهای بیرون از محدودهٔ فرمِ بزرگسالان — بعد از سؤال ۱ تمام می‌شوند. */
+  var EXITS = {
+    teen: {
+      title: "این فرم برای بزرگسال‌ها طراحی شده",
+      body: ["در چند سال اول بعد از اولین پریود، بدن هنوز داره تنظیم می‌شه و نامنظمی پریود خیلی وقت‌ها طبیعیه. برای همین معیارهای PCOS در نوجوانی فرق داره: باید هم پریودها نامنظم باشن و هم نشونه‌ای از بالا بودن آندروژن‌ها مثل پرمویی دیده بشه. سونوگرافی و AMH هم تا ۸ سال بعد از اولین پریود ملاک نیستن."],
+      listTitle: "کی ارزش داره با پزشک مطرح کنی:",
+      list: [
+        "یک تا سه سال از اولین پریودت گذشته و فاصلهٔ پریودهات مدام بیشتر از ۴۵ روز یا کمتر از ۲۱ روزه",
+        "بیشتر از سه سال گذشته و فاصله‌ها مدام بیشتر از ۳۵ روز یا کمتر از ۲۱ روزه، یا سالی کمتر از ۸ بار پریود می‌شی",
+        "بیشتر از یک سال از اولین پریودت گذشته و یک بار بیشتر از ۹۰ روز پریود نشدی",
+        "روی صورت یا بدنت موهای ضخیم و زبر زیاده، یا جوش خیلی شدید داری"
+      ],
+      after: [
+        "اگه فقط یکی از این نشونه‌ها باشه، پزشک معمولاً وضعیت رو زیر نظر می‌گیره و چند وقت بعد دوباره بررسی می‌کنه.",
+        "اگه موهای ضخیم ظرف چند ماه خیلی زیاد شدن یا صدات بم شده، زودتر بررسی بشه."
+      ]
+    },
+    meno: {
+      title: "در این دوران معیارها فرق می‌کنه",
+      body: [
+        "در دوران گذار به یائسگی، نامنظم شدن پریود بخشی از تغییرات طبیعی بدنه؛ برای همین سؤال‌های این فرم دربارهٔ پریود دیگه کمکی نمی‌کنن.",
+        "در این سن، PCOS بر اساس سابقه بررسی می‌شه. اگه در سال‌های قبل، مثلاً بین ۲۰ تا ۴۰ سالگی، مدت طولانی پریودهای نامنظم و پرمویی داشتی، همین سابقه رو به پزشکت بگو."
+      ],
+      after: [
+        "اگه موهای ضخیم تازه و سریع زیاد شدن یا صدات بم شده، این تغییر ارزش بررسی پزشکی سریع داره.",
+        "اگه یائسه شدی، یعنی بیشتر از یک ساله پریود نشدی، و دوباره خونریزی داشتی، حتماً به پزشک بگو."
+      ]
+    },
+    nomenarche: {
+      title: "این مورد ارزش بررسی پزشکی داره",
+      body: [
+        "اگه ۱۵ سالت شده و هنوز اولین پریودت رو نداشتی، بهتره پزشک بررسی کنه. این وضعیت علت‌های مختلفی داره و پزشک با معاینه و چند آزمایش ساده علتش رو پیدا می‌کنه.",
+        "سؤال‌های بعدی این فرم دربارهٔ الگوی پریوده و برای تو کاربردی نداره؛ پس لازم نیست ادامه بدی."
+      ],
+      after: ["برای شروع، پزشک عمومی، متخصص زنان یا متخصص غدد می‌تونه کمکت کنه."]
+    }
+  };
+
+  function isExit(age) { return age === "teen" || age === "meno" || age === "nomenarche"; }
+
+  /* مسیرِ واقعیِ هر نفر. تا سؤال ۱ جواب نگرفته، بلندترین مسیر (۱۰) فرض می‌شود. */
+  function path(a) {
+    var age = a && a.age;
+    if (isExit(age)) return ["age"];
+    var ids = ["age", "status", "interval", "count", "gap90", "hair", "skin", "changes", "lab"];
+    // سونوگرافی و AMH فقط برای بزرگسالی که دست‌کم ۸ سال از اولین پریودش گذشته (یائسگی پیش‌تر بیرون رفته)
+    if (!age || age === "adult8") ids.push("ovary");
+    return ids;
+  }
+
+  function answered(a, id) {
+    var v = a ? a[id] : undefined;
+    if (BY[id] && BY[id].multi) return !!(v && v.length);
+    return v !== undefined && v !== null && v !== "";
+  }
+
+  function optText(id, v) {
+    var q = BY[id];
+    var one = function (x) {
+      for (var i = 0; i < q.options.length; i++) if (q.options[i][0] === x) return q.options[i][1];
+      return "";
+    };
+    return q.multi ? (v || []).map(one).join("؛ ") : one(v);
+  }
+
+  function joinFa(list) {
+    if (list.length < 2) return list.join("");
+    return list.slice(0, -1).join("، ") + " و " + list[list.length - 1];
+  }
+
+  function evaluate(a, o) {
+    a = a || {};
+    o = o || {};
+    var p = path(a);
+    var r = { path: p, exit: null, alerts: [], gated: false, headline: null, cats: null, positives: [], doctor: false,
+      reasons: [], unknowns: [], unknownNote: "", notes: [], next: [] };
+    if (isExit(a.age)) { r.exit = a.age; return r; }
+
+    // فقط جوابِ سؤال‌هایی که در مسیرِ همین نفرند خوانده می‌شود (مثلاً سؤال ۱۰ بعد از عوض شدنِ سؤال ۱)
+    var v = function (id) { return p.indexOf(id) >= 0 ? a[id] : undefined; };
+    var age = v("age"), status = v("status"), interval = v("interval"), count = v("count"), gap = v("gap90");
+    var hair = v("hair"), skin = v("skin"), lab = v("lab"), ovary = v("ovary");
+    var changes = v("changes") || [];
+    var ch = function (x) { return changes.indexOf(x) >= 0; };
+    var hist = status === "pregnant" || status === "lactation" || status === "hormonal";
+
+    // ── ۱) اول مسیرهای پیگیری
+    if (status === "maybe") r.alerts.push(ALERT.preg);
+    if (ch("virilize")) r.alerts.push(ALERT.viril);
+    // «بدون دلیلِ مشخص»: بارداری، شیردهی و داروی هورمونی خودشان دلیلِ نیامدنِ پریودند
+    if (gap === "now" && !hist) r.alerts.push(ALERT.amen);
+    var other = [];
+    if (ch("milk")) other.push(OTHER.milk);
+    if (ch("energy")) other.push(OTHER.energy);
+    if (other.length) r.alerts.push({ id: "other", tone: "attention", title: OTHER.title, body: other.concat([OTHER.close]) });
+    r.gated = status === "maybe" && !o.pregCleared;
+
+    // ── ۲) سه دستهٔ مستقلِ شواهد. چند جوابِ مثبتِ پریود هنوز یک دسته‌اند.
+    var cyc = [];
+    if (interval === "long") cyc.push("فاصلهٔ پریودهات بارها بیشتر از ۳۵ روز بوده");
+    if (interval === "short") cyc.push("فاصلهٔ پریودهات بارها کمتر از ۲۱ روز بوده");
+    if (interval === "both") cyc.push("هم فاصله‌های طولانی‌تر از ۳۵ روز داشتی و هم کوتاه‌تر از ۲۱ روز");
+    if (count === "lt8") cyc.push(hist ? "در یک سالِ بدون اثر بارداری، شیردهی یا دارو کمتر از ۸ بار پریود شدی" : "سالی کمتر از ۸ بار پریود می‌شی");
+    if (gap === "before") cyc.push("پیش اومده بیشتر از ۹۰ روز پریود نشی");
+    if (gap === "now" && !hist) cyc.push("الان بیشتر از ۹۰ روزه پریود نشدی");
+    // با داروی هورمونی، «منظم» فقط وقتی پذیرفته می‌شود که الگوی بی‌دارو هم معلوم باشد
+    var cycle = cyc.length ? "pos" : interval === "normal" && (status !== "hormonal" || count === "ge8") ? "neg" : "unknown";
+
+    var hairPos = hair === "one" || hair === "many";
+    var andro = hairPos || lab === "high" ? "pos" : hair === "none" ? "neg" : "unknown";
+    var asked = p.indexOf("ovary") >= 0;
+    var ovPos = ovary === "us" || ovary === "amh" || ovary === "both";
+    // «فقط کیست تخمدان» این یافته نیست
+    var ov = !asked ? "na" : ovPos ? "pos" : ovary === "no" ? "neg" : ovary === "cyst" ? "cyst" : "unknown";
+
+    r.cats = { cycle: cycle, andro: andro, ovary: ov };
+    if (cycle === "pos") r.positives.push("cycle");
+    if (andro === "pos") r.positives.push("andro");
+    if (ov === "pos") r.positives.push("ovary");
+    r.doctor = lab === "high" || ov === "pos";
+
+    var n = r.positives.length, hid;
+    if (n >= 2) hid = r.doctor ? "multi" : "combo";
+    else if (n === 1) hid = "single";
+    else if (cycle === "neg" && hair === "none") hid = "clear";
+    else hid = "unknown";
+    r.headline = { id: hid, text: HEADLINES[hid] };
+
+    // ── ۳) دلیل‌های شخصی
+    var finds = cyc.slice();
+    if (hair === "one") finds.push("روی یکی از ناحیه‌هایی که پرسیدیم موهای ضخیم و زبرِ مشخص داری");
+    if (hair === "many") finds.push("روی چند ناحیه موهای ضخیم و زبرِ مشخص داری");
+    if (lab === "high") finds.push("پزشکت بعد از آزمایش گفته تستوسترون یا هورمون مشابهش بالاست");
+    if (ovPos) finds.push(ovary === "us" ? "پزشکت گفته ظاهر تخمدانت در سونوگرافی «پلی‌کیستیک» بوده" :
+      ovary === "amh" ? "پزشکت گفته نتیجهٔ AMH با این معیار همخوانی داشته" : "پزشکت گفته هم سونوگرافی و هم AMH با این معیار همخوانی داشتن");
+
+    if (hist) r.reasons.push(HIST[status]);
+    if (finds.length) r.reasons.push("گفتی " + joinFa(finds) + ".");
+    if (cyc.length >= 2) r.reasons.push("جواب‌هات دربارهٔ پریود با هم یک نشونه حساب می‌شن: نامنظمی پریود.");
+
+    if (hid === "combo") {
+      r.reasons.push("این ترکیب ارزش بررسی از نظر PCOS رو داره. می‌تونی همین خلاصه رو به پزشکت نشون بدی.");
+    } else if (hid === "multi") {
+      r.reasons.push("این نشونه‌ها از " + (n === 3 ? "سه" : "دو") + " دستهٔ جدا هستن و دست‌کم یکیشون رو قبلاً پزشک تأیید کرده. این هم‌جهت بودن ارزش بررسی کامل از نظر PCOS رو داره. می‌تونی همین خلاصه رو به پزشکت نشون بدی.");
+    } else if (hid === "single") {
+      var only = r.positives[0];
+      if (only === "cycle") r.reasons.push("نشونه‌ای که دیدیم نامنظمی پریوده.");
+      else if (only === "andro") r.reasons.push(hairPos && lab === "high" ?
+        "نشونه‌ای که دیدیم بالا بودن آندروژن‌هاست؛ هم پرمویی داری و هم آزمایشت این رو نشون داده. این دو تا با هم یک نشونه حساب می‌شن." :
+        hairPos ? "نشونه‌ای که دیدیم پرمویی واضحه." : "نشونه‌ای که دیدیم بالا بودن تستوسترون یا هورمون مشابهش در آزمایشه.");
+      else r.reasons.push("نشونه‌ای که دیدیم ظاهر پلی‌کیستیک تخمدان یا AMH بالاست. این یافته در خیلی از زن‌هایی که PCOS ندارن هم دیده می‌شه.");
+      r.reasons.push("یک نشونه به‌تنهایی برای PCOS کافی نیست، ولی خودش ارزش بررسی داره.");
+      var miss = [];
+      if (cycle === "unknown") miss.push("الگوی پریودهات");
+      if (andro === "unknown") miss.push("پرمویی");
+      if (miss.length) r.reasons.push("دربارهٔ " + joinFa(miss) + " جواب روشنی نداشتیم؛ پزشک می‌تونه این رو هم بررسی کنه.");
+    } else if (hid === "clear") {
+      r.reasons.push((hist ? "گفتی قبل از اون دوره فاصلهٔ پریودهات معمولاً ۲۱ تا ۳۵ روز بوده" : "گفتی فاصلهٔ پریودهات معمولاً ۲۱ تا ۳۵ روزه") +
+        " و رویش مشخص موهای ضخیم و زبر نداری. این دو تا نشونه‌های اصلی‌ان و در جواب‌هات دیده نشدن.");
+      if (lab === "unknown" || ov === "unknown") r.reasons.push("این جواب فقط از روی علائمیه که گفتی؛ آزمایشی که انجام نشده، نامشخص حساب شده.");
+    } else {
+      if (cycle === "neg") r.reasons.push((hist ? "گفتی قبل از اون دوره فاصلهٔ پریودهات معمولاً ۲۱ تا ۳۵ روز بوده" : "گفتی فاصلهٔ پریودهات معمولاً ۲۱ تا ۳۵ روزه") + "، ولی بدون جوابِ روشن دربارهٔ پرمویی نمی‌شه نتیجه گرفت.");
+      else if (hair === "none") r.reasons.push("گفتی رویش مشخص موهای ضخیم و زبر نداری، ولی بدون الگوی روشنِ پریود نمی‌شه نتیجه گرفت.");
+      if (cycle === "unknown") r.unknowns.push(status === "hormonal" && interval === "normal" ? "تعداد پریودهات در یک سالِ بدون داروی هورمونی" :
+        hist ? "الگوی پریودهات قبل از اون دوره" : "الگوی پریودهات، یعنی فاصله یا تعدادشون");
+      if (andro === "unknown") r.unknowns.push("رویش موهای ضخیم و زبر");
+      if (lab === "unknown") r.unknowns.push("آزمایش آندروژن‌ها، مثل تستوسترون");
+      if (ov === "unknown") r.unknowns.push("سونوگرافی یا AMH");
+      if (lab === "unknown" || ov === "unknown") r.unknownNote = "آزمایشی که انجام نشده، نامشخص حساب شده، نه طبیعی.";
+    }
+
+    // ── ۴) توضیح‌های کنارِ نتیجه
+    if (status === "lactation" && gap === "now") r.notes.push("گفتی الان بیشتر از ۹۰ روزه پریود نشدی. در شیردهی و ماه‌های بعد از زایمان این معمولاً طبیعیه و جزو نشونه‌ها حساب نشد.");
+    if (status === "hormonal" && gap === "now") r.notes.push("گفتی الان بیشتر از ۹۰ روزه پریود نشدی. داروی هورمونی می‌تونه دلیلش باشه، برای همین جزو نشونه‌ها حساب نشد. اگه دارو رو قطع کردی و از اون موقع بیشتر از ۳ ماهه پریود نشدی، با پزشک مطرح کن.");
+    if (ov === "cyst") r.notes.push("گفتی فقط بهت گفتن «کیست تخمدان» داری. کیست ساده با ظاهر «پلی‌کیستیک» فرق داره و جزو این نشونه‌ها حساب نشد.");
+    if (skin === "acne" || skin === "thin" || skin === "both") r.notes.push(skin === "acne" ? "جوش ماندگار رو هم گفتی. این به‌تنهایی ملاک PCOS نیست، ولی خوبه به پزشکت بگی." :
+      skin === "thin" ? "کم‌پشتی فرق سر رو هم گفتی. این به‌تنهایی ملاک PCOS نیست، ولی خوبه به پزشکت بگی." :
+      "جوش ماندگار و کم‌پشتی فرق سر رو هم گفتی. این‌ها به‌تنهایی ملاک PCOS نیستن، ولی خوبه به پزشکت بگی.");
+    if (lab === "normal" && hairPos) r.notes.push("آزمایشت بالا نبوده، ولی پرمویی واضح خودش یک نشونه حساب می‌شه.");
+    if (status === "hormonal" && lab === "normal") r.notes.push("اگه آزمایش موقع مصرف داروی هورمونی بوده، ممکنه آندروژن‌ها رو کمتر از واقع نشون داده باشه.");
+    if (status === "hormonal" && hair === "none") r.notes.push("داروی هورمونی، مخصوصاً قرص، می‌تونه پرمویی و جوش رو کمتر نشون بده؛ اگه قبل از دارو یا بعد از قطعش این‌ها رو داشتی، به پزشکت بگو.");
+    if (age === "adult3" && (hid === "single" || hid === "clear" || hid === "unknown")) r.notes.push("چون کمتر از ۸ سال از اولین پریودت گذشته، سونوگرافی و AMH هنوز ملاک نیستن و پرسیده نشدن.");
+    if (age === "unsure") r.notes.push("چون مطمئن نبودی چند سالته یا چقدر از اولین پریودت گذشته، نتیجه با معیارهای بزرگسال‌ها حساب شد و سؤال سونوگرافی پرسیده نشد. اگه زیر ۱۸ سالی یا کمتر از ۳ سال از اولین پریودت گذشته، این نتیجه برات صدق نمی‌کنه.");
+    if (status === "unsure") r.notes.push("گفتی مطمئن نیستی بارداری، شیردهی یا داروی هورمونی روی وضعیتت اثر داره یا نه. اگه احتمال بارداری هست، اول اون رو بررسی کن.");
+
+    // ── ۵) قدمِ بعدی
+    var skinIssue = skin === "acne" || skin === "thin" || skin === "both";
+    if (status === "pregnant") {
+      r.next.push(n >= 1 ? "این سابقه رو با پزشک یا مامات در میون بذار. اگه این علائم رو داشتی، ممکنه بعضی مراقبت‌های بارداری، مثل آزمایش قند، زودتر انجام بشه." :
+        "سابقهٔ پریودهای قبل از بارداری و هر علامتی که داشتی رو با پزشک یا مامات در میون بذار.");
+    } else if (n >= 2) {
+      r.next.push("با پزشک عمومی، متخصص زنان یا متخصص غدد مطرح کن. پزشک برای تشخیص، علت‌های مشابه رو هم با چند آزمایش ساده، مثل تیروئید و پرولاکتین، کنار می‌ذاره.");
+    } else if (n === 1) {
+      r.next.push("با پزشک مطرح کن تا همین نشونه و بقیهٔ موارد با هم بررسی بشن. پزشک علت‌های دیگه، مثل مشکل تیروئید یا پرولاکتین، رو هم در نظر می‌گیره.");
+    } else if (hid === "clear") {
+      r.next.push(skinIssue ? "اگه جوش یا کم‌پشتی‌ای که گفتی ماندگاره، بررسی پزشکی قدم بعدیه تا علتش معلوم بشه." :
+        "اگه علامتی داری که ماندگاره یا نگرانت می‌کنه، بررسی پزشکی قدم بعدیه.");
+    } else {
+      r.next.push(status === "hormonal" ? "الگوی واقعی پریود فقط بدون داروی هورمونی معلوم می‌شه. دارو رو خودسرانه قطع نکن؛ دربارهٔ بررسی علائمت با پزشکت صحبت کن." :
+        status === "lactation" ? "وقتی پریودهات برگشت، تاریخ روز اول هر پریود رو یادداشت کن تا الگوشون معلوم بشه." :
+        "از امروز تاریخ روز اول هر پریود رو یادداشت کن. با یادداشتِ چند ماه، می‌تونی دوباره همین تست رو بزنی یا همون رو به پزشکت نشون بدی.");
+      r.next.push("اگه علامتی اذیتت می‌کنه، لازم نیست صبر کنی؛ همین حالا هم می‌تونی با پزشک مطرح کنی.");
+    }
+    return r;
+  }
+
+  /* خلاصه برای پزشک — فقط وقتی خودِ کاربر دکمه را بزند ساخته و کپی می‌شود. */
+  function summary(a, r, o) {
+    o = o || {};
+    var L = ["خلاصهٔ پرسش‌نامهٔ علائم PCOS", "این یه پرسش‌نامهٔ غربالگریه، نه تشخیص.", ""];
+    var hist = a.status === "pregnant" || a.status === "lactation" || a.status === "hormonal";
+    r.path.forEach(function (id) {
+      if (!answered(a, id)) return;
+      L.push("• " + BY[id].short + ": " + optText(id, a[id]));
+      if (id === "status" && hist) L.push("• جواب‌های مربوط به پریود دربارهٔ الگوی " + (a.status === "hormonal" ? "قبل از اثر داروی هورمونی" : "قبل از بارداری") + " است.");
+    });
+    L.push("");
+    if (r.exit) {
+      L.push("نتیجهٔ پرسش‌نامه: " + EXITS[r.exit].title);
+    } else {
+      if (o.pregCleared) L.push("تست بارداری: به گفتهٔ خودم منفی بوده");
+      var shown = r.alerts.filter(function (x) { return r.gated ? x.pre : !(x.id === "preg" && o.pregCleared); });
+      if (shown.length) L.push("پیام‌های پیگیری: " + shown.map(function (x) { return x.title; }).join("؛ "));
+      L.push("نتیجهٔ پرسش‌نامه: " + (r.gated ? "اول بارداری رو بررسی کن؛ نتیجهٔ PCOS بعد از روشن شدن بارداری" : r.headline.text));
+    }
+    if (o.date) L.push("تاریخ: " + o.date);
+    return L.join("\n");
+  }
+
+  root.PCOS = { Q: Q, BY: BY, HEADLINES: HEADLINES, EXITS: EXITS, path: path, answered: answered,
+    optText: optText, evaluate: evaluate, summary: summary };
+})(typeof window !== "undefined" ? window : globalThis);
+</script>
+
+<script id="pcos-ui">
+/* رابط — یک سؤال در هر صفحه، برگشت با دکمه و با «عقبِ» گوشی، و هیچ ذخیره‌ای بیرون از همین حافظه. */
+(function () {
+  "use strict";
+  var P = window.PCOS;
+  var PUBLIC_URL = "https://mrhunter82s.github.io/pcos-test/";
+  var DISCLAIMER = "این پرسش‌نامه برای غربالگری طراحی شده. تشخیص PCOS و بررسی علت‌های مشابه با پزشکه. دقت این نسخه هنوز اندازه‌گیری نشده.";
+  var app = document.getElementById("app");
+  var toastEl = document.getElementById("toast");
+  var sheet = document.getElementById("sheet");
+  var sheetText = document.getElementById("sheet-x");
+  var INTRO = app.innerHTML;
+  var ABOUT = app.querySelector("details.about").outerHTML;
+  var RUN = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  var ICON = {
+    back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
+    urgent: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z" stroke-linejoin="round"/><path d="M12 10v4.5"/><circle cx="12" cy="17.4" r=".6" fill="currentColor"/></svg>',
+    attention: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><circle cx="12" cy="16.6" r=".6" fill="currentColor"/></svg>'
+  };
+
+  // gen با هر «شروع دوباره» عوض می‌شود تا ورودی‌های کهنهٔ تاریخچه به نتیجهٔ قبلی برنگردند.
+  var S = { answers: {}, i: 0, screen: "intro", pregCleared: false, depth: 0, gen: 0, hist: false,
+    pendingRestart: false, restartTimer: 0, backTimer: 0, lastQ: null, renderedAt: 0 };
+
+  function fa(x) { return String(x).replace(/\d/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".charAt(+d); }); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function para(t) { return "<p>" + esc(t) + "</p>"; }
+  function items(list) { return list.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join(""); }
+
+  // ── تاریخچه: هر قدمِ جلو یک ورودی، تا «عقبِ» گوشی (اندروید/اینستاگرام) سؤالِ قبلی را بیاورد نه بیرون بزند.
+  try {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    history.replaceState({ pcos: 1, run: RUN, gen: 0, s: "intro", i: 0, d: 0 }, "");
+    S.hist = true;
+  } catch (e) { S.hist = false; }
+
+  function push(st) {
+    st.pcos = 1; st.run = RUN; st.gen = S.gen; st.d = S.depth + 1;
+    if (S.hist) { try { history.pushState(st, ""); } catch (e) { S.hist = false; } }
+    apply(st);
+  }
+
+  function firstUnanswered(p) {
+    for (var k = 0; k < p.length; k++) if (!P.answered(S.answers, p[k])) return k;
+    return -1;
+  }
+
+  function apply(st) {
+    S.depth = st.d || 0;
+    if ((st.s === "q" || st.s === "result") && st.run === RUN && st.gen === S.gen) {
+      var p = P.path(S.answers), first = firstUnanswered(p);
+      if (st.s === "result" && first === -1) S.screen = "result";
+      else {
+        var i = st.s === "q" ? Math.min(st.i, p.length - 1) : p.length - 1;
+        if (first !== -1 && first < i) i = first;
+        S.screen = "q"; S.i = i;
+      }
+    } else S.screen = "intro";
+    render();
+  }
+
+  window.addEventListener("popstate", function (e) {
+    clearTimeout(S.backTimer);
+    if (S.pendingRestart) { finishRestart(); return; }
+    var st = e.state;
+    if (!st || st.pcos !== 1 || st.run !== RUN) { S.depth = 0; S.screen = "intro"; render(); return; }
+    apply(st);
+  });
+
+  function startQuiz() { S.answers = {}; S.pregCleared = false; push({ s: "q", i: 0 }); }
+
+  function goBack() {
+    if (S.hist && S.depth > 0) {
+      history.back();
+      // اگر مرورگری popstate نفرستاد، دستی برگرد
+      S.backTimer = setTimeout(manualBack, 600);
+      return;
+    }
+    manualBack();
+  }
+  function manualBack() {
+    if (S.screen === "q" && S.i > 0) { S.i -= 1; render(); }
+    else { S.screen = "intro"; render(); }
+  }
+
+  function restart() {
+    if (S.hist && S.depth > 0) {
+      S.pendingRestart = true;
+      history.go(-S.depth); // به ورودیِ صفحهٔ اول؛ ورودی‌های این دور با pushِ بعدی پاک می‌شوند
+      S.restartTimer = setTimeout(function () { if (S.pendingRestart) finishRestart(); }, 900);
+      return;
+    }
+    finishRestart();
+  }
+  function finishRestart() {
+    S.pendingRestart = false;
+    clearTimeout(S.restartTimer);
+    S.gen += 1; S.depth = 0;
+    startQuiz();
+  }
+
+  // ── نمایش
+  function render() {
+    S.renderedAt = Date.now();
+    if (S.screen === "intro") { S.lastQ = null; app.innerHTML = INTRO; window.scrollTo(0, 0); }
+    else if (S.screen === "q") renderQ();
+    else renderResult();
+  }
+
+  function focusEl(el) {
+    if (!el) return;
+    try { el.focus({ preventScroll: true }); } catch (e) { try { el.focus(); } catch (e2) {} }
+  }
+
+  function curId() { return P.path(S.answers)[S.i]; }
+
+  function renderQ() {
+    var p = P.path(S.answers);
+    if (S.i > p.length - 1) S.i = p.length - 1;
+    var id = p[S.i], q = P.BY[id];
+    var fresh = S.lastQ !== id;
+    S.lastQ = id;
+    var role = q.multi ? "checkbox" : "radio";
+    var h = '<div class="top"><div class="toprow">' +
+      '<button type="button" class="back" data-act="back">' + ICON.back + "<span>برگشت</span></button>" +
+      '<span class="count" id="count" aria-live="polite"></span></div>' +
+      '<div class="bar" id="bar" role="progressbar" aria-label="پیشرفت پرسش‌نامه" aria-valuemin="0" aria-valuemax="100"><i id="barfill"></i></div></div>' +
+      '<section class="q' + (fresh ? " enter" : "") + '">' +
+      (q.lead ? '<p class="lead">' + esc(q.lead) + "</p>" : "") +
+      '<h1 class="qt" id="qt" tabindex="-1">' + esc(q.title) + "</h1>" +
+      (q.help ? '<p class="help">' + esc(q.help) + "</p>" : "") +
+      '<div class="opts" role="' + (q.multi ? "group" : "radiogroup") + '" aria-labelledby="qt">' +
+      q.options.map(function (o) {
+        return '<button type="button" class="opt' + (q.multi ? " multi" : "") + '" role="' + role + '" aria-checked="false" data-act="opt" data-v="' + o[0] + '">' +
+          '<span class="ind" aria-hidden="true"></span><span class="lbl">' + esc(o[1]) + "</span></button>";
+      }).join("") +
+      '</div><p class="qnote" id="qnote" hidden></p></section>' +
+      '<div class="dock"><button type="button" class="btn primary" id="next" data-act="next" disabled>بعدی</button></div>';
+    app.innerHTML = h;
+    updateQ();
+    window.scrollTo(0, 0);
+    if (fresh) focusEl(document.getElementById("qt"));
+  }
+
+  function updateQ() {
+    var p = P.path(S.answers), id = p[S.i], q = P.BY[id], val = S.answers[id];
+    var opts = app.querySelectorAll(".opt");
+    for (var k = 0; k < opts.length; k++) {
+      var ov = opts[k].getAttribute("data-v");
+      var on = q.multi ? (val || []).indexOf(ov) >= 0 : val === ov;
+      opts[k].setAttribute("aria-checked", on ? "true" : "false");
+    }
+    var total = p.length, n = S.i + 1, pct = Math.round((n / total) * 100);
+    document.getElementById("count").textContent = "سؤال " + fa(n) + " از " + fa(total);
+    document.getElementById("barfill").style.width = pct + "%";
+    document.getElementById("bar").setAttribute("aria-valuenow", String(pct));
+    var next = document.getElementById("next");
+    next.disabled = !P.answered(S.answers, id);
+    next.textContent = n === total ? "دیدن نتیجه" : "بعدی";
+    var note = document.getElementById("qnote");
+    var txt = !q.multi && q.notes && val ? q.notes[val] || "" : "";
+    note.textContent = txt;
+    note.hidden = !txt;
+  }
+
+  function selectOpt(v) {
+    var id = curId(), q = P.BY[id];
+    if (q.multi) {
+      var cur = (S.answers[id] || []).slice(), k = cur.indexOf(v);
+      if (k >= 0) cur.splice(k, 1);
+      else if (q.exclusive.indexOf(v) >= 0) cur = [v];
+      else { cur = cur.filter(function (x) { return q.exclusive.indexOf(x) < 0; }); cur.push(v); }
+      S.answers[id] = cur;
+    } else S.answers[id] = v;
+    updateQ();
+  }
+
+  function next() {
+    // زدنِ دوبارهٔ «بعدی» در لحظهٔ عوض شدنِ صفحه نباید سؤالِ بعدی را بی‌جواب رد کند
+    if (Date.now() - S.renderedAt < 350) return;
+    var p = P.path(S.answers);
+    if (!P.answered(S.answers, p[S.i])) return;
+    if (S.i < p.length - 1) push({ s: "q", i: S.i + 1 });
+    else push({ s: "result" });
+  }
+
+  function alertHtml(a) {
+    return '<div class="alert ' + a.tone + '"><h2>' + (ICON[a.tone] || "") + "<span>" + esc(a.title) + "</span></h2>" + a.body.map(para).join("") + "</div>";
+  }
+
+  function actions(withCopy) {
+    return '<div class="actions">' +
+      (withCopy ? '<button type="button" class="btn primary" data-act="copy">کپی خلاصه برای پزشک</button>' : "") +
+      '<button type="button" class="btn secondary" data-act="share">فرستادن تست برای دوستت</button>' +
+      '<button type="button" class="btn ghost" data-act="restart">شروع دوباره</button></div>';
+  }
+
+  function renderResult() {
+    S.lastQ = null;
+    var r = P.evaluate(S.answers, { pregCleared: S.pregCleared });
+    var h = '<section class="res enter" id="res" tabindex="-1" aria-label="نتیجه">';
+    if (r.exit) {
+      var x = P.EXITS[r.exit];
+      h += '<div class="hl"><span class="eyebrow">نتیجه</span><h2>' + esc(x.title) + "</h2>" + x.body.map(para).join("") +
+        (x.list ? '<p class="sub">' + esc(x.listTitle) + '</p><ul class="dots">' + items(x.list) + "</ul>" : "") + "</div>";
+      if (x.after) h += '<ul class="notes">' + items(x.after) + "</ul>";
+      h += actions(false);
+    } else if (r.gated) {
+      h += r.alerts.filter(function (a) { return a.pre; }).map(alertHtml).join("");
+      h += '<div class="gate"><p>اگه تست بارداری منفی بود، نتیجهٔ بررسی علائمت رو همین‌جا ببین.</p>' +
+        '<button type="button" class="btn secondary" data-act="preg-clear">تست منفی بود؛ نتیجه رو نشون بده</button>' +
+        '<p class="small">اگه تست مثبت بود، سابقهٔ این علائم رو با پزشک یا مامات در میون بذار. اگه صفحه رو بستی، بعداً دوباره پرش کن؛ جواب‌ها جایی ذخیره نمی‌شن.</p></div>';
+      h += actions(true);
+    } else {
+      if (S.pregCleared) h += '<p class="cleared">گفتی تست بارداری منفی بوده؛ این نتیجه بر همین اساسه.</p>';
+      h += r.alerts.filter(function (a) { return !(a.id === "preg" && S.pregCleared); }).map(alertHtml).join("");
+      h += '<div class="hl" id="hl"><span class="eyebrow">نتیجهٔ بررسی علائم</span><h2 id="headline">' + esc(r.headline.text) + "</h2>" +
+        r.reasons.map(para).join("") +
+        (r.unknowns.length ? '<p class="sub">این‌ها برامون نامشخص موند:</p><ul class="dots">' + items(r.unknowns) + "</ul>" : "") +
+        (r.unknownNote ? para(r.unknownNote) : "") + "</div>";
+      h += '<div class="nextbox"><span class="eyebrow">قدم بعدی</span>' + r.next.map(para).join("") + "</div>";
+      if (r.notes.length) h += '<ul class="notes">' + items(r.notes) + "</ul>";
+      h += actions(true);
+    }
+    h += '<p class="disc">' + esc(DISCLAIMER) + "</p></section>" + ABOUT;
+    app.innerHTML = h;
+    window.scrollTo(0, 0);
+    focusEl(document.getElementById("res"));
+  }
+
+  // ── کپی و فرستادن
+  var toastTimer = 0;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
+  }
+
+  function legacyCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px;";
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      ok = document.execCommand("copy");
+    } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return !!ok;
+  }
+
+  function openSheet(text) {
+    sheetText.value = text;
+    sheet.hidden = false;
+    setTimeout(function () { try { sheetText.focus(); sheetText.select(); } catch (e) {} }, 50);
+  }
+
+  function copyText(text, okMsg) {
+    var fallback = function () { if (legacyCopy(text)) toast(okMsg); else openSheet(text); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext !== false) {
+        navigator.clipboard.writeText(text).then(function () { toast(okMsg); }, fallback);
+        return;
+      }
+    } catch (e) {}
+    fallback();
+  }
+
+  function copySummary() {
+    var r = P.evaluate(S.answers, { pregCleared: S.pregCleared });
+    var date = "";
+    try { date = new Intl.DateTimeFormat("fa-IR", { year: "numeric", month: "long", day: "numeric" }).format(new Date()); } catch (e) {}
+    copyText(P.summary(S.answers, r, { pregCleared: S.pregCleared, date: date }), "خلاصه کپی شد؛ می‌تونی برای پزشکت بفرستی یا نشونش بدی");
+  }
+
+  function shareLink() {
+    // فقط نشانیِ عمومیِ لندینگ — نه جواب‌ها، نه نتیجه
+    if (navigator.share) {
+      try {
+        navigator.share({ url: PUBLIC_URL }).then(null, function (err) {
+          if (err && err.name === "AbortError") return;
+          copyText(PUBLIC_URL, "لینک تست کپی شد؛ برای دوستت بفرستش");
+        });
+        return;
+      } catch (e) {}
+    }
+    copyText(PUBLIC_URL, "لینک تست کپی شد؛ برای دوستت بفرستش");
+  }
+
+  document.addEventListener("click", function (e) {
+    var t = e.target && e.target.closest ? e.target.closest("[data-act]") : null;
+    if (!t) return;
+    var act = t.getAttribute("data-act");
+    if (act === "start") startQuiz();
+    else if (act === "opt") selectOpt(t.getAttribute("data-v"));
+    else if (act === "next") next();
+    else if (act === "back") goBack();
+    else if (act === "copy") copySummary();
+    else if (act === "share") shareLink();
+    else if (act === "restart") restart();
+    else if (act === "preg-clear") { S.pregCleared = true; renderResult(); }
+    else if (act === "sheet-close") sheet.hidden = true;
+  });
+  sheet.addEventListener("click", function (e) { if (e.target === sheet) sheet.hidden = true; });
+})();
+</script>
+</body>
+</html>
