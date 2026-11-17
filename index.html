@@ -202,20 +202,28 @@ details.about[open] summary svg{transform:rotate(180deg)}
   var EXIT_NOTE = "با این جواب، سؤال دیگه‌ای لازم نیست و همین حالا توضیح مخصوص خودت رو می‌بینی.";
 
   var Q = [
-    { id: "age", title: "چند سالته و چقدر از اولین پریودت گذشته؟",
-      help: "اگه در دوران گذار به یائسگی هستی یا یائسه شدی، همون گزینه رو انتخاب کن.",
-      short: "سن و زمان اولین پریود",
+    { id: "age", title: "چند سالته؟",
+      help: "اگه در آستانهٔ یائسگی هستی یا یائسه شدی، گزینهٔ سوم رو بزن.",
+      short: "سن",
       options: [
-        ["adult8", "۱۸ سالم یا بیشتره و ۸ سال یا بیشتر از اولین پریودم گذشته"],
-        ["adult3", "۱۸ سالم یا بیشتره و ۳ تا کمتر از ۸ سال گذشته"],
-        ["teen", "زیر ۱۸ سالمه یا کمتر از ۳ سال از اولین پریودم گذشته"],
-        ["meno", "در دوران گذار به یائسگی‌ام یا یائسه شدم"],
-        ["nomenarche", "۱۵ سالم یا بیشتره و هنوز اولین پریودم رو نداشتم"],
-        ["unsure", "مطمئن نیستم"]
+        ["a18", "۱۸ سال یا بیشتر"],
+        ["u18", "زیر ۱۸ سال"],
+        ["meno", "در آستانهٔ یائسگی‌ام یا یائسه شدم"]
+      ],
+      notes: { u18: EXIT_NOTE, meno: EXIT_NOTE } },
+    { id: "menarche", title: "اولین پریودت حدوداً چند سال پیش بود؟",
+      help: "مثلاً اگه ۱۳ سالگی اولین بار پریود شدی و الان ۲۵ سالته، می‌شه ۱۲ سال پیش.",
+      short: "اولین پریود",
+      options: [
+        ["y8", "۸ سال پیش یا بیشتر"],
+        ["y3", "بین ۳ تا ۸ سال پیش"],
+        ["lt3", "کمتر از ۳ سال پیش"],
+        ["never", "هنوز هیچ‌وقت پریود نشدم"],
+        ["unsure", "یادم نیست"]
       ],
       notes: {
-        unsure: "اگه تقریبی می‌دونی، نزدیک‌ترین گزینه رو انتخاب کن. اگه نه، ادامه بده؛ نتیجه با معیارهای بزرگسال‌ها حساب می‌شه.",
-        teen: EXIT_NOTE, meno: EXIT_NOTE, nomenarche: EXIT_NOTE
+        unsure: "اگه تقریبی یادته، نزدیک‌ترین گزینه رو بزن. اگه نه، ادامه بده؛ نتیجه با معیارهای بزرگسال‌ها حساب می‌شه.",
+        lt3: EXIT_NOTE, never: EXIT_NOTE
       } },
     { id: "status", title: "الان کدوم مورد درباره‌ات صدق می‌کنه؟", short: "وضعیت فعلی",
       options: [
@@ -307,7 +315,7 @@ details.about[open] summary svg{transform:rotate(180deg)}
     hormonal: "چون گفتی داروی هورمونی مصرف می‌کنی یا تازه قطعش کردی، این توضیح دربارهٔ الگوی پریودهات قبل از اثر داروئه."
   };
 
-  /* مسیرهای بیرون از محدودهٔ فرمِ بزرگسالان — بعد از سؤال ۱ تمام می‌شوند. */
+  /* مسیرهای بیرون از محدودهٔ فرمِ بزرگسالان — بعد از سؤال ۱ یا ۲ تمام می‌شوند. */
   var EXITS = {
     teen: {
       title: "این فرم برای بزرگسال‌ها طراحی شده",
@@ -321,7 +329,8 @@ details.about[open] summary svg{transform:rotate(180deg)}
       ],
       after: [
         "اگه فقط یکی از این نشونه‌ها باشه، پزشک معمولاً وضعیت رو زیر نظر می‌گیره و چند وقت بعد دوباره بررسی می‌کنه.",
-        "اگه موهای ضخیم ظرف چند ماه خیلی زیاد شدن یا صدات بم شده، زودتر بررسی بشه."
+        "اگه موهای ضخیم ظرف چند ماه خیلی زیاد شدن یا صدات بم شده، زودتر بررسی بشه.",
+        "اگه ۱۵ سالت شده و هنوز اولین پریودت رو نداشتی، همین خودش ارزش بررسی پزشکی داره."
       ]
     },
     meno: {
@@ -345,15 +354,25 @@ details.about[open] summary svg{transform:rotate(180deg)}
     }
   };
 
-  function isExit(age) { return age === "teen" || age === "meno" || age === "nomenarche"; }
+  /* سؤال ۱ و ۲ با هم یکی از این دسته‌ها را می‌سازند: adult8، adult3، unsure، teen، meno، nomenarche */
+  function ageCat(a) {
+    var g = a && a.age, m = a && a.menarche;
+    if (g === "u18") return "teen";
+    if (g === "meno") return "meno";
+    if (g !== "a18") return undefined;
+    return m === "y8" ? "adult8" : m === "y3" ? "adult3" : m === "lt3" ? "teen" :
+      m === "never" ? "nomenarche" : m === "unsure" ? "unsure" : undefined;
+  }
+  function isExit(c) { return c === "teen" || c === "meno" || c === "nomenarche"; }
 
-  /* مسیرِ واقعیِ هر نفر. تا سؤال ۱ جواب نگرفته، بلندترین مسیر (۱۰) فرض می‌شود. */
+  /* مسیرِ واقعیِ هر نفر. تا جوابِ سؤال ۱ و ۲ معلوم نشده، بلندترین مسیر (۱۱) فرض می‌شود. */
   function path(a) {
-    var age = a && a.age;
-    if (isExit(age)) return ["age"];
-    var ids = ["age", "status", "interval", "count", "gap90", "hair", "skin", "changes", "lab"];
+    var g = a && a.age, c = ageCat(a);
+    if (g === "u18" || g === "meno") return ["age"];
+    if (isExit(c)) return ["age", "menarche"];
+    var ids = ["age", "menarche", "status", "interval", "count", "gap90", "hair", "skin", "changes", "lab"];
     // سونوگرافی و AMH فقط برای بزرگسالی که دست‌کم ۸ سال از اولین پریودش گذشته (یائسگی پیش‌تر بیرون رفته)
-    if (!age || age === "adult8") ids.push("ovary");
+    if (!c || c === "adult8") ids.push("ovary");
     return ids;
   }
 
@@ -383,11 +402,12 @@ details.about[open] summary svg{transform:rotate(180deg)}
     var p = path(a);
     var r = { path: p, exit: null, alerts: [], gated: false, headline: null, cats: null, positives: [], doctor: false,
       reasons: [], unknowns: [], unknownNote: "", notes: [], next: [] };
-    if (isExit(a.age)) { r.exit = a.age; return r; }
+    var cat = ageCat(a);
+    if (isExit(cat)) { r.exit = cat; return r; }
 
-    // فقط جوابِ سؤال‌هایی که در مسیرِ همین نفرند خوانده می‌شود (مثلاً سؤال ۱۰ بعد از عوض شدنِ سؤال ۱)
+    // فقط جوابِ سؤال‌هایی که در مسیرِ همین نفرند خوانده می‌شود (مثلاً سؤالِ سونوگرافی بعد از عوض شدنِ سؤال ۲)
     var v = function (id) { return p.indexOf(id) >= 0 ? a[id] : undefined; };
-    var age = v("age"), status = v("status"), interval = v("interval"), count = v("count"), gap = v("gap90");
+    var age = cat, status = v("status"), interval = v("interval"), count = v("count"), gap = v("gap90");
     var hair = v("hair"), skin = v("skin"), lab = v("lab"), ovary = v("ovary");
     var changes = v("changes") || [];
     var ch = function (x) { return changes.indexOf(x) >= 0; };
@@ -489,7 +509,7 @@ details.about[open] summary svg{transform:rotate(180deg)}
     if (status === "hormonal" && lab === "normal") r.notes.push("اگه آزمایش موقع مصرف داروی هورمونی بوده، ممکنه آندروژن‌ها رو کمتر از واقع نشون داده باشه.");
     if (status === "hormonal" && hair === "none") r.notes.push("داروی هورمونی، مخصوصاً قرص، می‌تونه پرمویی و جوش رو کمتر نشون بده؛ اگه قبل از دارو یا بعد از قطعش این‌ها رو داشتی، به پزشکت بگو.");
     if (age === "adult3" && (hid === "single" || hid === "clear" || hid === "unknown")) r.notes.push("چون کمتر از ۸ سال از اولین پریودت گذشته، سونوگرافی و AMH هنوز ملاک نیستن و پرسیده نشدن.");
-    if (age === "unsure") r.notes.push("چون مطمئن نبودی چند سالته یا چقدر از اولین پریودت گذشته، نتیجه با معیارهای بزرگسال‌ها حساب شد و سؤال سونوگرافی پرسیده نشد. اگه زیر ۱۸ سالی یا کمتر از ۳ سال از اولین پریودت گذشته، این نتیجه برات صدق نمی‌کنه.");
+    if (age === "unsure") r.notes.push("چون یادت نبود اولین پریودت کی بوده، نتیجه با معیارهای بزرگسال‌ها حساب شد و سؤال سونوگرافی پرسیده نشد. اگه کمتر از ۳ سال از اولین پریودت گذشته، این نتیجه برات صدق نمی‌کنه.");
     if (status === "unsure") r.notes.push("گفتی مطمئن نیستی بارداری، شیردهی یا داروی هورمونی روی وضعیتت اثر داره یا نه. اگه احتمال بارداری هست، اول اون رو بررسی کن.");
 
     // ── ۵) قدمِ بعدی
@@ -536,7 +556,7 @@ details.about[open] summary svg{transform:rotate(180deg)}
     return L.join("\n");
   }
 
-  root.PCOS = { Q: Q, BY: BY, HEADLINES: HEADLINES, EXITS: EXITS, path: path, answered: answered,
+  root.PCOS = { Q: Q, BY: BY, HEADLINES: HEADLINES, EXITS: EXITS, path: path, ageCat: ageCat, answered: answered,
     optText: optText, evaluate: evaluate, summary: summary };
 })(typeof window !== "undefined" ? window : globalThis);
 </script>
